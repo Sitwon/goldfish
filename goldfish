@@ -18,6 +18,7 @@ MODE=create
 
 display_help(){
 	echo "Usage: ${SELF} [-f|--file pathname] [-s|--size size-in-megabytes] [-m|--mount mountpoint]"
+	echo "       ${SELF} [-d|--destroy path]"
 }
 
 create_filesystem(){
