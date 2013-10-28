@@ -42,7 +42,7 @@ create_filesystem(){
 	LOOP="$( sudo $LOSETUP -f )"
 
 	dd if=/dev/urandom of="$FILE" bs=1M count="$SIZE" >/dev/null 2>&1
-	sudo $LOSETUP -e blowfish -p 0 "$LOOP" "$FILE" < <( dd if=/dev/urandom bs=1 count=1024 2>/dev/null )
+	dd if=/dev/urandom bs=1 count=1024 2>/dev/null | sudo $LOSETUP -e blowfish -p 0 "$LOOP" "$FILE"
 	sudo $MKFS -t "$FILESYSTEM" "$LOOP" >/dev/null 2>&1
 	sudo mount "$LOOP" "$MOUNT"
 	echo "Filesystem mounted at $MOUNT using $FILE"
