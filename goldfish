@@ -6,21 +6,6 @@ SELF="$0"
 LOSETUP=/sbin/losetup
 MKFS=/sbin/mkfs
 
-TEMP=$( getopt -n "$( basename $0 )" -o hf:s:m:t:d: --long help,file:,size:,mount:,type:,destroy: -- "$@" )
-eval set -- "$TEMP"
-
-MOUNT=
-SIZE=
-FILE=
-FILESYSTEM=
-TARGET=
-MODE=create
-
-display_help(){
-	echo "Usage: ${SELF} [-f|--file pathname] [-s|--size size-in-megabytes] [-m|--mount mountpoint]"
-	echo "       ${SELF} [-d|--destroy path]"
-}
-
 create_filesystem(){
 	MOUNT="${1:-}"
 	SIZE="${2:-50}"
@@ -68,6 +53,21 @@ destroy_filesystem(){
 	rm -rf "$FILE"
 	echo "Filesystem destroyed."
 }
+
+display_help(){
+	echo "Usage: ${SELF} [-f|--file pathname] [-s|--size size-in-megabytes] [-m|--mount mountpoint]"
+	echo "       ${SELF} [-d|--destroy path]"
+}
+
+TEMP=$( getopt -n "$( basename $0 )" -o hf:s:m:t:d: --long help,file:,size:,mount:,type:,destroy: -- "$@" )
+eval set -- "$TEMP"
+
+MOUNT=
+SIZE=
+FILE=
+FILESYSTEM=
+TARGET=
+MODE=create
 
 while true; do
 	case "$1" in
